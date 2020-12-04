@@ -46,11 +46,7 @@ def get_opendata():
     sql =""" select distinct dong from cigudong"""
     curs.execute(sql)
     rows = curs.fetchall()
-    # csv = pd.read_csv('./test.csv')
-    # print(csv)
-    # for l in titleList:
-    #     csvWirter.writerow(l)
-    # f.close
+
     count = 0
     for i in range(4377, len(rows)):
         try:
@@ -83,13 +79,9 @@ def updatedata():
     sql =""" select distinct dongCode from apart"""
     curs.execute(sql)
     rows = curs.fetchall()
-    # csv = pd.read_csv('./test.csv')
-    # print(csv)
-    # for l in titleList:
-    #     csvWirter.writerow(l)
-    # f.close
+
     count = 644
-    for i in range(644, len(rows)):
+    for i in range(0, len(rows)):
         try:
             print(count)
             count += 1
@@ -113,7 +105,33 @@ def updatedata():
             print(e)
             continue
 
+def getLoc():
+    curs = conn.cursor()
+    sql =""" select distinct address from apart"""
+    curs.execute(sql)
+    rows = curs.fetchall()
+
+    count = 644
+    for i in range(0, 1):
+        try:
+            print(count)
+            count += 1
+            _url = 'http://dapi.kakao.com/v2/local/search/address.json?query=' + rows[i][0]
+            params = {}
+            headers = {
+                'Referer': 'http://realtyprice.chosun.com/',
+            }
+            res = requests.get(_url, headers={"Authorization":"KaKaoAK c5d1c10f13c76f1b58e4bace2662692d"}, timeout=1)
+            rs_json = res.json()
+            print(rs_json)
+
+        except Exception as e:
+            print(e)
+            continue
+
+
+
 
 
 if __name__ == "__main__":
-    updatedata()
+    getLoc()
