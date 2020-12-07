@@ -47,6 +47,7 @@ class Header extends React.Component {
         this.setState({
             isModalOpen: 'signup'
         });
+	this.props.setModal('signup');
     }
 
     logout = e => {

@@ -48,6 +48,7 @@ class LoginForm extends React.Component {
           alert('로그인 성공');
           const { email, password } = this.state;
           this.props.setSession(email);
+	  this.props.setModal('');
         }
       })
       .catch((err) => {
@@ -70,8 +71,11 @@ class LoginForm extends React.Component {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
         if (res.data.success === false) {
           this.props.close();
+	  this.props.setModal('');
         } else {
           this.props.gotoSignin();
+	  this.props.setModal('signin');
+	  
         }
         // 회원가입 했으니까 로그인 화면으로 가기
       })
@@ -143,6 +147,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginId"
                     placeholder="아이디"
+	      	    name="email"
                     aria-label="Userid"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -156,6 +161,7 @@ class LoginForm extends React.Component {
                     className="loginPw"
                     placeholder="password"
                     type="password"
+	      	    name="password"
                     aria-label="password"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -168,6 +174,7 @@ class LoginForm extends React.Component {
                   <FormControl
                     className="loginId"
                     placeholder="이름"
+	            name="name"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -179,7 +186,8 @@ class LoginForm extends React.Component {
                   </InputGroup.Prepend>
                   <FormControl
                     className="loginId"
-                    placeholder="이름"
+                    placeholder="닉네임"
+	      	    name="nickname"
                     aria-label="nickname"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
@@ -193,6 +201,7 @@ class LoginForm extends React.Component {
                     className="loginId"
                     placeholder="이메일"
                     aria-label="email"
+	            name="address"
                     aria-describedby="basic-addon1"
                     onChange={this.inputHandler}
                   />
