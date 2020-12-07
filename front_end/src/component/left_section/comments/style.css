@@ -1,0 +1,46 @@
+#comments_block {
+    height:38%;
+    width:100%;
+    background-color: #1e0e24;
+    padding:2px;
+}
+ol#comment_list {
+    margin-left: -22px;
+    margin-right: 13px;
+}
+
+ol#comment_list>li {
+    position: relative;
+    padding: 18px 0;
+    border-bottom: solid 1px black;
+}
+
+#comment_button {
+    background-color: #e9ecef;
+}
+#comment_input {
+    margin-top: 4px;
+    margin-left: 5px;
+}
+ol#comment_list>li div.name.time {
+    margin-bottom: 6px;
+}
+
+ol#comment_list>li div.comment_content {
+    width: 615px;
+    font-size: 1.1em;
+}
+
+ol#comment_list>li div.buttons {
+    display: none;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: #ddd;
+}
+#comment_des {
+    background-color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+

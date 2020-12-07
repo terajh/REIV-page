@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="./style/common.css">
+  <link rel="shortcut icon" href="#">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <title>React App</title>
+  <style type="text/css" >
+
+    .wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+        position: fixed;
+        left:0;
+        right:0;
+        top:0;
+        z-index: 5;
+        bottom:0;
+        background: rgba(0,0,0,0.2); /*not in ie */
+        
+    }
+    .wrap-loading svg{ /*로딩 이미지*/
+      margin-left: 45%;
+      width: 10%;
+      margin-top: 20%;
+      height: 20%;
+      color: yellow;
+    }
+    .display-none{ /*감추기*/
+        display:none;
+    }
+</style>
+    
+    
+    
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root" style="width:100%;"></div>
+  <div class="wrap-loading display-none" style="z-index:200">
+    <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-stopwatch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07A7.001 7.001 0 0 1 8 16 7 7 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3zm0 2.1a.5.5 0 0 1 .5.5V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 0 1 .5-.5z"/>
+    </svg>
+  </div> 
+
+  <script>
+  </script>
+
+</body>
+
+</html>
