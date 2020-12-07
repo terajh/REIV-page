@@ -12,7 +12,6 @@ class MainOne extends React.Component {
 
     clickHouse = (e) => {
         e.preventDefault();
-        console.log('wowwow',e.target.attributes[1].nodeValue);
         this.props.updateLoc(e.target.attributes[1].nodeValue);
         this.props.toggleMain();
     }

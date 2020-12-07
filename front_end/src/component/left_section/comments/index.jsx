@@ -46,7 +46,7 @@ class Comments extends React.Component {
             return;
         }
         else{
-            axios.post('http://localhost:3001/api/input_comment', 
+            axios.post('http://0.0.0.0:3001/api/input_comment', 
                 {
                     description : this.state.description,
                     pnu : this.state.pnu,

@@ -3,10 +3,10 @@ const proxy = require('http-proxy-middleware');
 module.exports = function(app) {
     app.use(
         proxy('/api', {
-            target: 'http://localhost:3001/'
+            target: 'http://0.0.0.0:3001/'
         }),
         proxy('/auth', {
-            target: 'http://localhost:3001/'
+            target: 'http://0.0.0.0:3001/'
         })
     )
 }
