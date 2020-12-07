@@ -12,10 +12,10 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 module.exports = (passport) => {
 
-    router.get('/', (req, res) => {
+    router.get('/session', (req, res) => {
         console.log('get auth',req.session.passport);
-        if(req.session.passport) {
-            res.status(404).send({success:false});
+        if(req.session.passport.user === undefined) {
+            res.status(200).send({success:false});
         }
         else {
             res.status(200).send({success:true, data:req.session.passport.user});

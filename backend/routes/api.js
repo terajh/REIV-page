@@ -5,8 +5,6 @@ const request = require('request')
 
 router.post('/get_guname', (req, res) => {
     console.log('api get_guname');
-
-
     var city_name = req.body._cityname
     db.query(`select distinct guname from cigudong where cityname="${city_name}";`, (err, results, field) => {
         if(err || results === undefined || results.length === 0) {
@@ -169,6 +167,58 @@ router.post('/input_comment', (req, res) => {
         }
     });
 })
+
+router.get('/getLike', (req, res) => {
+    console.log('getlike', req.session.passport);
+    var nickname = req.session.passport.user;
+    db.query(`select _name, apart.pnu, address from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+        if(err) {
+            res.json({success: false});
+        }
+        else{
+            res.json({
+                success:true,
+                pnu:results
+            });
+        }
+    });
+})
+
+router.post('/putLike', (req, res) => {
+    console.log('putlike', req.session);
+    var nickname = req.session.passport.user;
+    var pnu = req.body.pnu;
+    console.log(nickname, pnu)
+    db.query(`insert into userLike(user, pnu) values('${nickname}', '${pnu}')`, (err, results, field) => {
+        if(err) {
+            res.json({success: false});
+        }
+        else{
+            res.json({
+                success:true
+            });
+        }
+    });
+})
+
+router.post('/removeLike', (req, res) => {
+    console.log('getlike', req.session);
+    var nickname = req.session.passport.user;
+    var pnu = req.body.pnu;
+    db.query(`delete from userLike where user='${nickname}' and pnu='${pnu}'`, (err, results, field) => {
+        console.log(err, results);
+        
+        if(err) {
+            res.json({success: false});
+        }
+        else{
+            res.json({
+                success:true
+            });
+        }
+    })
+})
+
 
 
 module.exports = router;
