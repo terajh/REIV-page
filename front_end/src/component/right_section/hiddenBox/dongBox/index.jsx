@@ -24,7 +24,7 @@ class DongBox extends React.Component {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
             this.props.update_to(response.data.list, response.data.pnulist);
             this.props.setdong(e.target.innerText)
-            if(this.props.mod === 1) this.props.toggleMain()
+            if(this.props.mod === 1) this.props.toggleMain(0)
         })
         .catch(error => {
             console.log(error);
@@ -73,8 +73,8 @@ const mapDispatchToProps = dispatch => {
     return {
         update_to: function(list, pnulist){
             dispatch(updateMod(list, pnulist));
-        },toggleMain: function () {
-            dispatch(toggleMain());
+        },toggleMain: function (a) {
+            dispatch(toggleMain(a));
         }
     }
 }
