@@ -48,7 +48,8 @@ module.exports = (passport) => {
             }
             else{
                 db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
-                    res.send({ success: true});
+                    console.log(err);
+			res.send({ success: true});
                 });
             }
         })

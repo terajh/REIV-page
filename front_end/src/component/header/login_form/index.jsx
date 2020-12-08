@@ -73,7 +73,7 @@ class LoginForm extends React.Component {
           this.props.close();
 	  this.props.setModal('');
         } else {
-          this.props.gotoSignin();
+          //this.props.gotoSignin();
 	  this.props.setModal('signin');
 	  
         }

@@ -61,7 +61,10 @@ class Comments extends React.Component {
                     alert('댓글 입력 성공');
                 }
                 this.props.updateDescriptionLists(this.state.nickname, today.toLocaleString(), this.state.description);
-            })
+            	this.setState({
+			description:''
+		});
+	    })
             .catch(err => {
                 console.log(err);
             })
