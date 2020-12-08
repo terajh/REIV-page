@@ -12,8 +12,7 @@ const maps = (state = [0, 0, 0, 0, 0, 0, 0, [], [], 0], action) => {
       return state
 
     case 'TOGGLE_MAIN':
-      var a = (state[4]===0) ? 1 : 0;
-      state = [state[0], state[1], state[2], state[3], a, state[5], state[6], state[7], state[8], state[9]];
+      state = [state[0], state[1], state[2], state[3], action.toggle, state[5], state[6], state[7], state[8], state[9]];
       return state
     
     case 'LOGIN_SESSION':

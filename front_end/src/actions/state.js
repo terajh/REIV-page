@@ -10,8 +10,9 @@ export const updateLoc = (pnu) => ({
   pnu:pnu
 })
 
-export const toggleMain = () => ({
-  type: 'TOGGLE_MAIN'
+export const toggleMain = (a) => ({
+  type: 'TOGGLE_MAIN',
+  toggle:a
 })
 
 export const loginSession = (session) => ({
@@ -53,6 +54,11 @@ export const setModal = (mode) => ({
 })
 
 
+export const gotoProfile = (mod, pnu) =>({
+	  type: 'GOTO_PROFILE',
+	  mod: mod,
+	  pnu: pnu
+})
 
 
 
