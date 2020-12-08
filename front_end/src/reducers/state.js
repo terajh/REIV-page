@@ -14,7 +14,9 @@ const maps = (state = [0, 0, 0, 0, 0, 0, 0, [], [], 0], action) => {
     case 'TOGGLE_MAIN':
       state = [state[0], state[1], state[2], state[3], action.toggle, state[5], state[6], state[7], state[8], state[9]];
       return state
-    
+    case 'GOTO_PROFILE':
+      state = [state[0], state[1], state[2], action.pnu, action.mod, state[5], state[6], state[7], state[8], state[9]];
+      return state
     case 'LOGIN_SESSION':
       state = [state[0], state[1], state[2], state[3], state[4], action.session, state[6], state[7], state[8], state[9]];
       return state
