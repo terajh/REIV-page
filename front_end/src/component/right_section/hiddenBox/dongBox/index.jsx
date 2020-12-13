@@ -16,10 +16,7 @@ class DongBox extends React.Component {
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
 
         document.getElementById('bottom_city_box_id').setAttribute('class','bottom_city_box');
-        axios.post(getHost()+'/api/get_list',{
-            code: e.target.innerText,
-            pnu: e.target.attributes[2].value
-        }, { withCredentials: true })
+        axios.get(getHost()+'/api/get_list/'+e.target.attributes[2].value, { withCredentials: true })
         .then(response => {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
             this.props.update_to(response.data.list, response.data.pnulist);

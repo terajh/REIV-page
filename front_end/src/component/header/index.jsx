@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import './style.css';
 import {logoutSession, setLike, loginSession, setModal, toggleMain} from '../../actions/state';
 import axios from 'axios';
-import LoginForm from './login_form';
+import LoginForm from './modalform';
 import {getHost} from '../../lib/host';
 
 axios.default.withCredentials = true;
@@ -54,7 +54,7 @@ class Header extends React.Component {
 
     logout = e => {
         e.preventDefault();
-        axios.get(getHost()+'/auth/logout', { withCredentials: true })
+        axios.delete(getHost()+'/auth/logout', { withCredentials: true })
         .then(res => {
             console.log('logout res',res);
             if(res.data.success === true) {
@@ -90,7 +90,6 @@ class Header extends React.Component {
         })
     }
     render() {
-        console.log(this.props.id)
         return (
             <header>
                 <Navbar id="nav" variant="dark">

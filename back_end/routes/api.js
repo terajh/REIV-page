@@ -3,9 +3,9 @@ const router = express.Router();
 var db = require('../lib/db');
 const request = require('request')
 
-router.post('/get_guname', (req, res) => {
+router.get('/get_guname/:id', (req, res) => {
     console.log('api get_guname');
-    var city_name = req.body._cityname
+    var city_name = req.params.id
     db.query(`select distinct guname from cigudong where cityname="${city_name}";`, (err, results, field) => {
         if(err || results === undefined || results.length === 0) {
             res.json({success:false});
@@ -20,9 +20,9 @@ router.post('/get_guname', (req, res) => {
     });
 })
 
-router.post('/get_dongname', (req, res) => {
+router.get('/get_dongname/:id', (req, res) => {
     console.log('api get_dongname');
-    var gu_name = req.body._guname;
+    var gu_name = req.params.id;
     db.query(`select distinct dongname, dong from cigudong where guname="${gu_name}";`, (err, results, field) => {
         if(err) res.json({success:false});
         else{
@@ -37,10 +37,9 @@ router.post('/get_dongname', (req, res) => {
     });
 })
 
-router.post('/get_list', (req, res) => {
+router.get('/get_list/:id', (req, res) => {
     console.log('api get_list');
-
-    var pnu = req.body.pnu;
+    var pnu = req.params.id;
     db.query(` select distinct _name, pnu from (select _name, dongname, pnu, dong from apart as A join cigudong as B on A.dongCode = B.dong) as C where dong='${pnu}';`, (err, results, field) => {
         if(err) res.send({success:false});
         else{
@@ -55,10 +54,9 @@ router.post('/get_list', (req, res) => {
     });
 
 })
-router.post('/get_address', (req, res) => {
+router.get('/get_address/:id', (req, res) => {
     console.log('api get_address');
-
-    var pnu = req.body.pnu;
+    var pnu = req.params.id;
     db.query(`select address from apart where pnu='${pnu}'`, (err, results, field) => {
         if(err || results.length == 0) res.send({success:false});
         else{
@@ -68,9 +66,9 @@ router.post('/get_address', (req, res) => {
     });
 })
 
-router.post('/get_extra', (req, res) => {
+router.get('/get_extra/:id', (req, res) => {
     console.log('api get_extra');
-    var pnu = req.body.pnu;
+    var pnu = req.params.id;
     request.get({
         headers:{
             'content-type': 'application/json, text/javascript, */*; q=0.01',
@@ -150,13 +148,14 @@ router.post('/get_log', (req, res) => {
 })
 
 
-router.post('/input_comment', (req, res) => {
+router.put('/input_comment', (req, res) => {
     console.log('input comment', req.body);
     var pnu = req.body.pnu;
     var description = req.body.description;
     var nickname = req.body.nickname;
     var dt = req.body.dt;
-    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}','${dt}')`, (err, results, field) => {
+    db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}', '${pnu}', '${dt}')`, (err, results, field) => {
+        console.log(err, results);
         if(err) {
             res.json({success: false});
         }
@@ -184,7 +183,7 @@ router.get('/getLike', (req, res) => {
     });
 })
 
-router.post('/putLike', (req, res) => {
+router.put('/putLike', (req, res) => {
     console.log('putlike', req.session);
     var nickname = req.session.passport.user;
     var pnu = req.body.pnu;
@@ -194,17 +193,25 @@ router.post('/putLike', (req, res) => {
             res.json({success: false});
         }
         else{
-            res.json({
-                success:true
+            db.query(`select _name, apart.pnu, address from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+                if(err) {
+                    res.json({success: false});
+                }
+                else{
+                    res.json({
+                        success:true,
+                        pnu:results
+                    });
+                }
             });
         }
     });
 })
 
-router.post('/removeLike', (req, res) => {
-    console.log('getlike', req.session);
+router.delete('/removeLike/:pnu', (req, res) => {
+    console.log('removeLike');
     var nickname = req.session.passport.user;
-    var pnu = req.body.pnu;
+    var pnu = req.params.pnu;
     db.query(`delete from userLike where user='${nickname}' and pnu='${pnu}'`, (err, results, field) => {
         console.log(err, results);
         

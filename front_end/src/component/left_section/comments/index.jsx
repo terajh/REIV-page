@@ -47,7 +47,7 @@ class Comments extends React.Component {
             return;
         }
         else{
-            axios.post(getHost()+'/api/input_comment', 
+            axios.put(getHost()+'/api/input_comment', 
                 {
                     description : this.state.description,
                     pnu : this.state.pnu,
@@ -60,8 +60,9 @@ class Comments extends React.Component {
                     alert('댓글을 다시 입력해주세요');
                 }else{
                     alert('댓글 입력 성공');
+                    this.props.updateDescriptionLists(this.state.nickname, today.toLocaleString(), this.state.description);
+
                 }
-                this.props.updateDescriptionLists(this.state.nickname, today.toLocaleString(), this.state.description);
             })
             .catch(err => {
                 console.log(err);
@@ -70,7 +71,6 @@ class Comments extends React.Component {
     }
 
     render() {
-        console.log('in comment', this.props.pnu)
         var des_list = this.props.pnu[7];
         return (
             <div id="comments_block">

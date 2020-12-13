@@ -3,7 +3,8 @@ import React from 'react';
 import './style.css'
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { updateLoc, toggleMain } from '../../../actions/state'
+import { updateLoc, toggleMain, setLike } from '../../../actions/state'
+import {getHost} from '../../../lib/host'
 
 class MainOne extends React.Component {
     constructor(props) {
@@ -12,8 +13,20 @@ class MainOne extends React.Component {
 
     clickHouse = (e) => {
         e.preventDefault();
-        this.props.updateLoc(e.target.attributes[1].nodeValue);
-        this.props.toggleMain();
+        document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
+        axios.get(getHost() + '/api/getLike', { withCredentials: true })
+            .then(res => {
+                if (res.data.success === true) {
+                    this.props.updateLoc(e.target.attributes[1].nodeValue);
+                    this.props.setLike(res.data.pnu);
+                    this.props.toggleMain();
+                } else {
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
     }
     render() {
         // let lists = this.props._list;
@@ -77,6 +90,9 @@ const mapDispatchToProps = dispatch => {
         },
         toggleMain: function () {
             dispatch(toggleMain());
+        },
+        setLike : function(list){
+            dispatch(setLike(list));
         }
     }
 };

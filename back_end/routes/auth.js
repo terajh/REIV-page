@@ -27,7 +27,7 @@ module.exports = (passport) => {
             res.send({status:true});
         }
     );
-    router.get('/logout', (req, res) => {
+    router.delete('/logout', (req, res) => {
         console.log('get logout');
         req.logout();
         res.send({success:true});
