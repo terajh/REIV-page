@@ -31,7 +31,6 @@ class Comments extends React.Component {
     }
 
     inputChange = (e) => {
-        console.log(e);
         this.setState({
             description : e.target.value
         });
@@ -64,6 +63,8 @@ class Comments extends React.Component {
 
                 }
             })
+
+                    
             .catch(err => {
                 console.log(err);
             })

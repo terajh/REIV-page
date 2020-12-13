@@ -2,14 +2,13 @@ import React from 'react';
 import './style.css'
 import axios from 'axios';
 import {connect} from 'react-redux'
-import {updatePniInfo, setLike} from '../../../actions/state';
+import {updatePniInfo, setLike, setModal, toggleMain} from '../../../actions/state';
 import {getHost} from '../../../lib/host'
 import Star from './star';
 
 axios.default.withCredentials = true;
 
 class MainTwo extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +17,9 @@ class MainTwo extends React.Component {
             name:'',
             arealist:[],
             loglist:[],
-            this_area:0
+            this_area:0,
+            pnu:'',
+            islike:0
         }
         this.updateThisArea = this.updateThisArea.bind(this);
         this.removeList = this.removeList.bind(this);
@@ -65,7 +66,7 @@ class MainTwo extends React.Component {
         var auk = parseInt(number/100000000);
         var manwow = parseInt((number%100000000)/10000);
 
-        return auk +'억 '+ manwow+'만'
+        return ((auk !== 0) ? auk +'억 '+ manwow+'만' : manwow+'만')
     }
     updateThisArea = (e) => {
         e.preventDefault();
@@ -95,10 +96,16 @@ class MainTwo extends React.Component {
             pnu: this.props.pnu[3]
         }, { withCredentials: true })
         .then(res => {
-            document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
-            // this.props.pnu[8].push(this.props.pnu[3]);
-            this.props.setLike(res.data.pnu);
-            this.forceUpdate();
+            if (res.data.success === true) {
+                document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
+                alert('찜목록에 추가되었습니다. 목록화면으로 돌아갑니다.');
+                this.props.setLike(res.data.pnu);
+                this.props.toggleMain(0);
+                this.props.setModal('profile');
+            }
+            else {
+                alert('찜목록에 추가하지 못했습니다. 다시 시도해주세요.')
+            }
 
         })
         .catch(err => {
@@ -111,7 +118,10 @@ class MainTwo extends React.Component {
         .then(res => {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
             this.props.setLike(this.props.pnu[8].filter((x)=>x.pnu!==this.props.pnu[3]));
-            this.forceUpdate();
+            alert('찜목록에서 삭제되었습니다.')
+            this.setState({
+                islike:0
+            })
         })
         .catch(err => {
             console.log(err);
@@ -218,6 +228,12 @@ const mapDispatchToProps = dispatch => {
         },
         setLike : function(list){
             dispatch(setLike(list));
+        },
+        toggleMain: function (a) {
+            dispatch(toggleMain(a));
+        },
+        setModal: function(mode){
+            dispatch(setModal(mode));
         }
 
     }

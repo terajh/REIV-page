@@ -155,7 +155,6 @@ router.put('/input_comment', (req, res) => {
     var nickname = req.body.nickname;
     var dt = req.body.dt;
     db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}', '${pnu}', '${dt}')`, (err, results, field) => {
-        console.log(err, results);
         if(err) {
             res.json({success: false});
         }
@@ -170,7 +169,7 @@ router.put('/input_comment', (req, res) => {
 router.get('/getLike', (req, res) => {
     console.log('getlike', req.session.passport);
     var nickname = req.session.passport.user;
-    db.query(`select _name, apart.pnu, address from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+    db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
         if(err) {
             res.json({success: false});
         }
@@ -188,24 +187,47 @@ router.put('/putLike', (req, res) => {
     var nickname = req.session.passport.user;
     var pnu = req.body.pnu;
     console.log(nickname, pnu)
-    db.query(`insert into userLike(user, pnu) values('${nickname}', '${pnu}')`, (err, results, field) => {
+    db.query(`select * from userLike where user='${nickname}' and pnu='${pnu}'`, (err, results, field) => {
         if(err) {
             res.json({success: false});
         }
         else{
-            db.query(`select _name, apart.pnu, address from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
-                if(err) {
-                    res.json({success: false});
-                }
-                else{
-                    res.json({
-                        success:true,
-                        pnu:results
-                    });
-                }
-            });
+            if(results.length !== 0){
+                db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+                    if(err) {
+                        res.json({success: false});
+                    }
+                    else{
+                        res.json({
+                            success:true,
+                            pnu:results
+                        });
+                    }
+                });
+            }else{
+                db.query(`insert into userLike(user, pnu) values('${nickname}', '${pnu}')`, (err, results, field) => {
+                    console.log(results)
+                    if(err) {
+                        res.json({success: false});
+                    }
+                    else{
+                        db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
+                            if(err) {
+                                res.json({success: false});
+                            }
+                            else{
+                                res.json({
+                                    success:true,
+                                    pnu:results
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         }
     });
+    
 })
 
 router.delete('/removeLike/:pnu', (req, res) => {
@@ -226,7 +248,24 @@ router.delete('/removeLike/:pnu', (req, res) => {
     })
 })
 
-
-
+router.post('/search', (req,res) => {
+    console.log('search render', req.body)
+    var query = req.body.query;
+    db.query(`select distinct _name, pnu from apart where _name like '%${query}%' or address like '%${query}%'`, (err, results, field) => {
+        console.log(err, results);
+        if(err){
+            res.json({success: false});
+        }
+        else{
+            var namelist = [];
+            var pnulist = [];
+            for (var i = 0; i < results.length; i++) {
+                namelist.push(results[i]['_name']);
+                pnulist.push(results[i]['pnu']);
+            }
+            res.json({ success:true, list: namelist, pnulist: pnulist});
+        }
+    })
+})
 module.exports = router;
 

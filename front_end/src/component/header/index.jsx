@@ -49,14 +49,12 @@ class Header extends React.Component {
             isModalOpen: 'signup'
         });
         this.props.setModal('signup');
-
     }
 
     logout = e => {
         e.preventDefault();
         axios.delete(getHost()+'/auth/logout', { withCredentials: true })
         .then(res => {
-            console.log('logout res',res);
             if(res.data.success === true) {
                 this.props.logout();
                 this.setState({
@@ -73,14 +71,18 @@ class Header extends React.Component {
     }
 
     showProfiles = (e) => {
-        e.preventDefault();
+        e.preventDefault();        
+        document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
         axios.get(getHost()+'/api/getLike', { withCredentials: true })
         .then(res => {
             if(res.data.success === true) {
+            document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
+
                 this.setState({
                     isModalOpen:'profile'
                 });
                 this.props.setLike(res.data.pnu);
+                this.props.toggleMain(0);
                 this.props.setModal('profile');
             }else{
             }
@@ -157,7 +159,9 @@ const mapDispatchToProps = dispatch => {
         },
         setModal: function(mode){
             dispatch(setModal(mode));
-        }
+        },toggleMain: function (a) {
+            dispatch(toggleMain(a))
+          }
     }
 }
 

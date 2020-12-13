@@ -23,8 +23,8 @@ module.exports = (passport) => {
 
     router.post('/signin', passport.authenticate('local'),
         (req, res) => {
-            console.log('get signin');
-            res.send({status:true});
+            console.log('get signin', req.session.passport);
+            res.send({status:true, nickname:req.session.passport.user});
         }
     );
     router.delete('/logout', (req, res) => {
@@ -43,12 +43,19 @@ module.exports = (passport) => {
 
         db.query(`select * from user where userid='${email}'`, (err, results, field) => {
             if(results.length != 0) {
-                res.send({success: false});
+                res.send({success: false, message:'이미 존재하는 아이디입니다.'});
             }
             else{
-                db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
-                    res.send({ success: true});
-                });
+                db.query(`select * from user where nickname='${nickname}'`, (err, results, field) => {
+                    if(results.length != 0) {
+                        res.send({success: false, message:'이미 존재하는 닉네임입니다.'});
+                    }
+                    else{
+                        db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
+                            res.send({ success: true});
+                        });
+                    }
+                })
             }
         })
                 

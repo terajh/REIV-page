@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Left_section from '../../component/left_section';
 import Right_section from '../../component/right_section';
 import Header from '../../component/header';
@@ -17,7 +17,6 @@ class Home extends React.Component {
         axios.get(getHost()+"/auth/session", 
         { withCredentials: true })
         .then((res) => {
-            console.log(res);
             if (res.data.success === true) {
                 this.props.setSession(res.data.data);
             } 
