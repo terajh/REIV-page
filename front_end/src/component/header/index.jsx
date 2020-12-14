@@ -104,10 +104,10 @@ class Header extends React.Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto" style={{'color':'white'}}>
-                            {(this.props.id[5] == 0) ? null : this.props.id[5] + '님 안녕하세요'}
+                            {(this.props.id[5] === 0) ? null : this.props.id[5] + '님 안녕하세요'}
                         </Nav>
                         <Nav>
-                            {(this.props.id[5] == 0) ? 
+                            {(this.props.id[5] === 0) ? 
                                 <Nav.Link href="/" onClick={this.openModal}>
                                     <svg width="30" height="30" viewBox="0 0 16 16" className="nav_icon bi bi-power" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z"/>

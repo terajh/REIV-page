@@ -168,6 +168,7 @@ router.put('/input_comment', (req, res) => {
 
 router.get('/getLike', (req, res) => {
     console.log('getlike', req.session.passport);
+    if(req.session.passport === undefined) res.json({success: false})
     var nickname = req.session.passport.user;
     db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
         if(err) {

@@ -13,15 +13,14 @@ class DongBox extends React.Component {
     }
 
     getApartList = (e) => {
+        this.props.toggleMain(0)
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-
         document.getElementById('bottom_city_box_id').setAttribute('class','bottom_city_box');
         axios.get(getHost()+'/api/get_list/'+e.target.attributes[2].value, { withCredentials: true })
         .then(response => {
             document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
             this.props.update_to(response.data.list, response.data.pnulist);
             this.props.setdong(e.target.innerText)
-            if(this.props.mod === 1) this.props.toggleMain(0)
         })
         .catch(error => {
             console.log(error);

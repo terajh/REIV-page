@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
     this.getContent = this.getContent.bind(this);
   }
   componentDidMount() {
-    if (this.props.list[9] == 'profile') {
+    if (this.props.list[9] === 'profile') {
       this.props.toggleMain();
       
     }
@@ -101,7 +101,7 @@ class LoginForm extends React.Component {
   }
 
   getContent = () => {
-    if (this.props.list[9] == 'signin') {
+    if (this.props.list[9] === 'signin') {
       return (
         <div className="modal" style={{ 'display': 'block' }}>
           <div>
@@ -141,7 +141,7 @@ class LoginForm extends React.Component {
         </div>
       )
     }
-    else if (this.props.list[9] == 'signup') {
+    else if (this.props.list[9] === 'signup') {
       return (
         <div className="modal" style={{ 'display': 'block' }}>
           <div>
@@ -225,7 +225,7 @@ class LoginForm extends React.Component {
           </div>
         </div>
       )
-    } else if (this.props.list[9] == 'profile') {
+    } else if (this.props.list[9] === 'profile') {
       var _list = this.props.list[8].filter((x) => x.user === this.props.list[5]);
       return (
         <div className="modal" style={{ 'display': 'block' }}>

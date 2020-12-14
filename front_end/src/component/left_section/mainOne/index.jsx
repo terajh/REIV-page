@@ -3,14 +3,14 @@ import React from 'react';
 import './style.css'
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { updateLoc, toggleMain, setLike, updateMod} from '../../../actions/state'
-import {getHost} from '../../../lib/host'
+import { updateLoc, toggleMain, setLike, updateMod } from '../../../actions/state'
+import { getHost } from '../../../lib/host'
 
 class MainOne extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            query:''
+            query: ''
         }
         this.getQuery = this.getQuery.bind(this);
         this.clearQuery = this.clearQuery.bind(this);
@@ -22,53 +22,62 @@ class MainOne extends React.Component {
         e.preventDefault();
         console.log(e);
         this.setState({
-            query:e.target.value
+            query: e.target.value
         })
     }
     clearQuery = (e) => {
         e.preventDefault();
         this.setState({
-            query:''
+            query: ''
         })
     }
     searchQuery = (e) => {
         console.log('search click');
         e.preventDefault();
         document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.post(getHost()+'/api/search', {query:this.state.query},
-        { withCredentials: true })
-        .then(res => {
-            if(res.data.success === true) {
-                console.log(res.data)
-                document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
-
-                this.props.update_to(res.data.list, res.data.pnulist);
-            }else{
-                alert('로그아웃 에러');
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
-    clickHouse = (e) => {
-        e.preventDefault();
-        document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
-        axios.get(getHost() + '/api/getLike', { withCredentials: true })
+        axios.post(getHost() + '/api/search', { query: this.state.query },
+            { withCredentials: true })
             .then(res => {
                 if (res.data.success === true) {
-                    this.props.updateLoc(e.target.attributes[1].nodeValue);
-                    this.props.setLike(res.data.pnu);
-                    this.props.toggleMain(1);
+                    console.log(res.data)
+                    document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading display-none');
+
+                    this.props.update_to(res.data.list, res.data.pnulist);
                 } else {
+                    alert('로그아웃 에러');
                 }
             })
             .catch(err => {
                 console.log(err);
             })
+    }
+    clickHouse = (e) => {
+        e.preventDefault();
+        console.log('click', this.props.list);
+        if (this.props.list[5] === 0) {
+            this.props.updateLoc(e.target.attributes[1].nodeValue);
+            this.props.toggleMain(1);
+        }
+        else {
+
+
+            document.querySelector('.wrap-loading').setAttribute('class', 'wrap-loading');
+            axios.get(getHost() + '/api/getLike', { withCredentials: true })
+                .then(res => {
+                    if (res.data.success === true) {
+                        this.props.updateLoc(e.target.attributes[1].nodeValue);
+                        this.props.setLike(res.data.pnu);
+                        this.props.toggleMain(1);
+                    } else {
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
 
     }
-    
+
     render() {
         // let lists = this.props._list;
         let get_list = this.props.list;
@@ -131,9 +140,9 @@ const mapDispatchToProps = dispatch => {
         toggleMain: function () {
             dispatch(toggleMain());
         },
-        setLike : function(list){
+        setLike: function (list) {
             dispatch(setLike(list));
-        },update_to: function(list, pnulist){
+        }, update_to: function (list, pnulist) {
             dispatch(updateMod(list, pnulist));
         }
     }

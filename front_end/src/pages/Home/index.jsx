@@ -17,6 +17,7 @@ class Home extends React.Component {
         axios.get(getHost()+"/auth/session", 
         { withCredentials: true })
         .then((res) => {
+            console.log('auth', res);
             if (res.data.success === true) {
                 this.props.setSession(res.data.data);
             } 

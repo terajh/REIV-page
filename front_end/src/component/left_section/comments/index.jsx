@@ -24,8 +24,7 @@ class Comments extends React.Component {
             this.setState({
                 nickname:this.props.pnu[5],
                 pnu : this.props.pnu[3],
-                description_list : this.props.pnu[7],
-                pnu : this.props.pnu[3]
+                description_list : this.props.pnu[7]
             })
         }
     }
