@@ -2,7 +2,7 @@
   "name": "front_end",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://terajh.github.io/Monitoring-Prices",
+  "homepage": "https://terajh.github.io/Monitoring-Prices",
   "dependencies": {
     "@testing-library/user-event": "^12.2.0",
     "axios": "^0.21.0",
