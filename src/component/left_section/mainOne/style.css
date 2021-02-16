@@ -1,0 +1,83 @@
+.sch_inputbox .input_outline input {
+    width: 220px;
+    height: 40px;
+    background: #f8f8f8;
+    border: 0;
+    color: #222;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 0 60px 0 22px;
+    outline: none;
+    letter-spacing: -0.05em;
+}
+
+.sch_inputbox {
+    position: relative;
+    display: block;
+    font-size: 18px;
+    border-bottom: 2px solid #7805e4;
+    line-height: 1.2em;
+    margin: 0 30px;
+    padding: 20px 0 0 0;
+    letter-spacing: -1px;
+}
+
+.sch_inputbox button.sch_smit {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    width: 35px;
+    height: 40px;
+    background-position: -33px -141px;
+    background-size: 200px;
+}
+
+.sch_inputbox .btn_delete {
+    position: absolute;
+    right: 33px;
+    top: 24px;
+    display: inline-block;
+    width: 25px;
+    height: 35px;
+    background-position: -33px -176px;
+    background-size: 200px;
+}
+
+.btn_input_search {
+    position: absolute;
+    right: 0;
+    top: 24px;
+    display: inline-block;
+    width: 30px;
+    height: 35px;
+    background-position: 3px -172px;
+    background-size: 200px;
+}
+
+.inner ul.apthouse_list li a {
+    display: block;
+    padding: 9px 0 11px;
+    font-size: 16px;
+    border-top: 1px solid #eaeaea;
+    margin: 0 30px;
+    color: black;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.inner ul.apthouse_list li:hover a {
+    background-color: #9833b1;
+    color: #fff;
+}
+a {
+    color: #222;
+    text-decoration: none;
+}
+
+div.inner {
+    overflow: scroll;
+    height: 92.7%;
+}
+

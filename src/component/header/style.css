@@ -1,0 +1,35 @@
+#nav {
+    background-color: #1e0e24;
+    z-index: 100;
+
+}
+
+header {
+    height: 7.3%;
+}
+
+#login_icon {
+    width:30px;
+    height:30px;
+    color: white;
+}
+
+#profile_icon {
+    width:30px;
+    height:30px;
+    color: white;
+    margin-right: 7px;
+    margin-top: 4px;
+}
+
+.nav_icon {
+    display: block;
+    margin-bottom: -3px;
+    width: 33px;
+    color:white;
+}
+
+.nav_text {
+    font-size:7px;
+    margin-bottom: 8px;
+}

@@ -1,0 +1,39 @@
+.title_txt {
+    position: absolute;
+    top: 88px;
+    left: 24%;
+    transition: ease all 0.4s;
+    z-index: 3;
+}
+
+.title_txt h1 {
+    display: inline-block;
+    background: #fff;
+    font-size: 20px;
+    color: #173f47;
+    padding: 3px 20px 4px;
+    border-radius: 30px;
+    letter-spacing: -1px;
+}
+
+.title_txt a {
+    z-index: 1;
+}
+
+.title_txt img.main_title_img {
+    width: 400px;
+}
+.title_txt img {
+    display: block;
+    margin-top: 10px;
+    width: 353px;
+}
+
+.title_txt img.ic_new {
+    display: none;
+    position: absolute;
+    right: -23px;
+    top: 20px;
+    width: 24px;
+    overflow: hidden;
+}
