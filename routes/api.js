@@ -9,17 +9,23 @@ router.get('/get_guname/:id', (req, res) => {
         var city_name = req.params.id
         db.query(`select distinct guname from cigudong where cityname="${city_name}";`, (err, results, field) => {
             if (err || results === undefined || results.length === 0) {
-                res.json({ success: false });
+                res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		    res.json({ success: false });
             }
             else {
                 var gulist = [];
                 for (var i = 0; i < results.length; i++) {
                     gulist.push(results[i]['guname']);
                 }
+		res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ list: gulist });
             }
         });
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 })
@@ -29,18 +35,27 @@ router.get('/get_dongname/:id', (req, res) => {
         console.log('api get_dongname');
         var gu_name = req.params.id;
         db.query(`select distinct dongname, dong from cigudong where guname="${gu_name}";`, (err, results, field) => {
-            if (err) res.json({ success: false });
-            else {
+            if (err){ 
+		res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		    res.json({ success: false });
+	    	
+	    }    
+	else {
                 var donglist = [];
                 var codelist = [];
                 for (var i = 0; i < results.length; i++) {
                     donglist.push(results[i]['dongname']);
                     codelist.push(results[i]['dong'])
                 }
+		res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ list: donglist, codelist: codelist });
             }
         });
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 })
@@ -58,10 +73,14 @@ router.get('/get_list/:id', (req, res) => {
                     namelist.push(results[i]['_name']);
                     pnulist.push(results[i]['pnu']);
                 }
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ list: namelist, pnulist: pnulist });
             }
         });
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 
@@ -73,6 +92,8 @@ router.get('/get_address/:id', (req, res) => {
         if (err || results.length == 0) res.send({ success: false });
         else {
             var address = results[0]['address'];
+		res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.json({ address: address });
         }
     });
@@ -101,7 +122,8 @@ router.get('/get_extra/:id', (req, res) => {
                     var yLoc = results[0]['yLoc'];
                     var roadAddress = results[0]['roadAddress'];
                     db.query(`select userid, description, dt from comments where pnu='${pnu}'`, (err, results, field) => {
-                        if (err || !results) {
+                        if (err || !results) {res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                             res.json({
                                 success: false,
                                 name: name,
@@ -115,6 +137,8 @@ router.get('/get_extra/:id', (req, res) => {
                         }
                         else {
                             var description = results;
+				res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                             res.json({
                                 success: true,
                                 name: name,
@@ -132,6 +156,8 @@ router.get('/get_extra/:id', (req, res) => {
 
         })
     } catch (err) {
+	   res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 
@@ -152,9 +178,13 @@ router.post('/get_log', (req, res) => {
             json: true
         }, (err, res2, body) => {
             if (err) {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: false });
             }
             else {
+		res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({
                     success: true,
                     loglist: body.items
@@ -162,6 +192,8 @@ router.post('/get_log', (req, res) => {
             }
         })
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 
@@ -176,9 +208,13 @@ router.put('/input_comment', (req, res) => {
     var dt = req.body.dt;
     db.query(`insert into comments(userid, description, pnu, dt) values('${nickname}','${description}', '${pnu}', '${dt}')`, (err, results, field) => {
         if (err) {
+		res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.json({ success: false });
         }
         else {
+	res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.json({
                 success: true
             });
@@ -194,9 +230,13 @@ router.post('/remove_comment', (req, res) => {
     db.query(`delete from comments where userid = '${nickname}' and dt = '${dt}'`, (err, results, field) => {
         console.log(err, results);
         if (err) {
+		res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.json({ success: false });
         }
         else {
+	res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.json({
                 success: true
             });
@@ -211,9 +251,13 @@ router.get('/getLike', (req, res) => {
         var nickname = req.session.passport.user;
         db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
             if (err) {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: false });
             }
             else {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({
                     success: true,
                     pnu: results
@@ -221,6 +265,8 @@ router.get('/getLike', (req, res) => {
             }
         });
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 })
@@ -233,15 +279,21 @@ router.put('/putLike', (req, res) => {
         console.log(nickname, pnu)
         db.query(`select * from userLike where user='${nickname}' and pnu='${pnu}'`, (err, results, field) => {
             if (err) {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: false });
             }
             else {
                 if (results.length !== 0) {
                     db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
                         if (err) {
+				res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                             res.json({ success: false });
                         }
                         else {
+				res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                             res.json({
                                 success: true,
                                 pnu: results
@@ -252,14 +304,20 @@ router.put('/putLike', (req, res) => {
                     db.query(`insert into userLike(user, pnu) values('${nickname}', '${pnu}')`, (err, results, field) => {
                         console.log(results)
                         if (err) {
+				res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                             res.json({ success: false });
                         }
                         else {
                             db.query(`select _name, apart.pnu, address, userLike.user from apart join userLike on apart.pnu = userLike.pnu where userLike.user='${nickname}';`, (err, results, field) => {
                                 if (err) {
+					res.header("Access-Control-Allow-Origin", "*");
+					  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                                     res.json({ success: false });
                                 }
                                 else {
+					res.header("Access-Control-Allow-Origin", "*");
+					  res.header("Access-Control-Allow-Headers", "X-Requested-With");
                                     res.json({
                                         success: true,
                                         pnu: results
@@ -272,6 +330,8 @@ router.put('/putLike', (req, res) => {
             }
         });
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 
@@ -286,15 +346,21 @@ router.delete('/removeLike/:pnu', (req, res) => {
             console.log(err, results);
 
             if (err) {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: false });
             }
             else {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({
                     success: true
                 });
             }
         })
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 })
@@ -306,6 +372,8 @@ router.post('/search', (req, res) => {
         db.query(`select distinct _name, pnu from apart where _name like '%${query}%' or address like '%${query}%'`, (err, results, field) => {
             console.log(err, results);
             if (err) {
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: false });
             }
             else {
@@ -315,10 +383,14 @@ router.post('/search', (req, res) => {
                     namelist.push(results[i]['_name']);
                     pnulist.push(results[i]['pnu']);
                 }
+		    res.header("Access-Control-Allow-Origin", "*");
+		      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.json({ success: true, list: namelist, pnulist: pnulist });
             }
         })
     } catch (err) {
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.json({ success: false });
     }
 })

@@ -28,12 +28,16 @@ module.exports = (passport) => {
     router.post('/signin', passport.authenticate('local'),
         (req, res) => {
             console.log('get signin', req.session.passport);
+		res.header("Access-Control-Allow-Origin", "*");
+		  res.header("Access-Control-Allow-Headers", "X-Requested-With");
             res.send({status:true, nickname:req.session.passport.user});
         }
     );
     router.delete('/logout', (req, res) => {
         console.log('get logout');
         req.logout();
+	    res.header("Access-Control-Allow-Origin", "*");
+	      res.header("Access-Control-Allow-Headers", "X-Requested-With");
         res.send({success:true});
         
     })
@@ -52,11 +56,16 @@ module.exports = (passport) => {
             else{
                 db.query(`select * from user where nickname='${nickname}'`, (err, results, field) => {
                     if(results.length != 0) {
+			    res.header("Access-Control-Allow-Origin", "*");
+			      res.header("Access-Control-Allow-Headers", "X-Requested-With");
                         res.send({success: false, message:'이미 존재하는 닉네임입니다.'});
                     }
                     else{
                         db.query(`insert into user(userid, userpw, address, username, nickname ) values ('${email}', '${password}', '${address}', '${name}', '${nickname}');`, (err, results, field) => {
-                            res.send({ success: true});
+                            
+				res.header("Access-Control-Allow-Origin", "*");
+				  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+				res.send({ success: true});
                         });
                     }
                 })
