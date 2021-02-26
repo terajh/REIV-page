@@ -14,19 +14,20 @@ const FileStore = require('session-file-store')(session);
 var bgetHost = require('./lib/host');
 var hostname = bgetHost();
 
-var privateKey = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/privkey.pem");
-var certificate = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/cert.pem");
-var ca = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/chain.pem");
-const credentials = {key:privateKey, cert:certificate, ca:ca};
+// var privateKey = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/privkey.pem");
+// var certificate = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/cert.pem");
+// var ca = fs.readFileSync("/etc/letsencrypt/live/joopi.cf/chain.pem");
+// const credentials = {key:privateKey, cert:certificate, ca:ca};
 
 app.use(cors({
 	origin:[
-		"https://terajh.github.io/Monitoring-Prices/"
+		"https://terajh.github.io/Monitoring-Prices/",
+        "https://terajh.github.io"
 	],
 	methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
 	preflightContinue: false,
 	optionsSuccessStatus:204,
-    	credentials: true
+    credentials: true
 }));
 app.set('view engine', 'ejs')
 
